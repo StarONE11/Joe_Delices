@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commander - Joe Délices</title>
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Import EmailJS -->
+  <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("jdnNQ6cSdS1p72_Pe"); // ex: abc123XYZ
+    })();
+  </script>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="images/joe-logo.png" alt="Logo Joe Délice">
+      <h1>Joe Délices</h1>
+    </div>
+    <nav>
+      <a href="index.html">Accueil</a>
+      <a href="menu.html">Menu</a>
+      <a href="commander.html" class="active">Commander</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <section class="commande-form">
+    <h2>Passer une commande</h2>
+    <p>Remplis le formulaire ci-dessous pour recevoir ton plat préféré.</p>
+
+    <form id="commandeForm">
+      <label for="nom">Nom ou pseudo</label>
+      <input type="text" id="nom" required>
+
+      <label for="telephone">Téléphone</label>
+      <input type="tel" id="telephone" required>
+
+      <label for="plat">Choisis ton plat</label>
+      <select id="plat" required>
+        <option value="">-- Sélectionne un plat --</option>
+        <option>Riz Cantonais</option>
+        <option>Poulet Braisé</option>
+        <option>Pâtes Sauce Tomate</option>
+      </select>
+
+      <label for="quantite">Nombre de plats</label>
+      <input type="number" id="quantite" required>
+
+      <label for="adresse">Adresse de livraison</label>
+      <textarea id="adresse" rows="3" required></textarea>
+
+      <label for="jour">Jour de livraison</label>
+      <select id="jour" required>
+        <option>Mardi</option>
+        <option>Vendredi</option>
+      </select>
+
+      <button type="submit" class="btn" style="margin-top: 10px;">Commander</button>
+    </form>
+
+    <p id="resultat" style="text-align:center; margin-top:20px;"></p>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Joe Délices - Tous droits réservés</p>
+  </footer>
+
+  <script>
+    document.getElementById("commandeForm").addEventListener("submit", function(e){
+      e.preventDefault(); // empêche le rechargement de la page
+
+      // Récupération des données du formulaire
+      const params = {
+        nom: document.getElementById("nom").value,
+        telephone: document.getElementById("telephone").value,
+        plat: document.getElementById("plat").value,
+        quantite: document.getElementById("quantite").value,
+        adresse: document.getElementById("adresse").value,
+        jour: document.getElementById("jour").value
+      };
+
+      // Envoi via EmailJS
+      emailjs.send("service_starone", "template_starone", params)
+      .then(function(response) {
+        document.getElementById("resultat").innerHTML = "✅ Commande envoyée avec succès !";
+        document.getElementById("commandeForm").reset();
+      }, function(error) {
+        document.getElementById("resultat").innerHTML = "❌ Erreur lors de l'envoi. Réessaie plus tard.";
+        console.error("Erreur :", error);
+		
+      });
+    });
+  </script>
+</body>
+</html>
