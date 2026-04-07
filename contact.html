@@ -3,8 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Joe Délices - Accueil</title>
+  <title>Contact - Joe Délices</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script>
+    (function(){ emailjs.init("jdnNQ6cSdS1p72_Pe"); })();
+  </script>
 </head>
 <body>
   <header>
@@ -13,48 +17,39 @@
       <h1>Joe Délices</h1>
     </div>
     <nav>
-      <a href="index.html" class="active">Accueil</a>
+      <a href="index.html">Accueil</a>
       <a href="menu.html">Menu</a>
       <a href="commander.html">Commander</a>
-      <a href="contact.html">Contact</a>
+      <a href="contact.html" class="active">Contact</a>
     </nav>
       <button class="hamburger" id="hamburger" aria-label="Menu">
       <span></span><span></span><span></span>
     </button>
   </header>
 
-  <section class="hero">
-    <div class="hero-text">
-      <span class="hero-badge">🍚 Fait maison · Livré à Lomé</span>
-      <h2>Le goût de chez soi, livré chez vous</h2>
-      <p>Riz cantonais fait maison — livré les <strong>mardis</strong> et <strong>vendredis</strong> à midi.</p>
-      <p>Passez votre commande la veille ou tôt le matin.</p>
-      <a href="menu.html" class="btn">Voir le menu</a>
-      <a href="commander.html" class="btn" style="margin-left:12px; background:#78350f;">Commander maintenant</a>
-    </div>
-    <img src="images/riz_cantonais.jpg" alt="Riz cantonais Joe Délices" class="hero-img">
-  </section>
+  <section class="contact">
+    <h2>Contactez-nous</h2>
+    <p>Une question ou une commande spéciale ? Écrivez-nous !</p>
 
-  <section class="commande">
-    <h3>Comment commander ?</h3>
-    <p>Simple, rapide, délicieux.</p>
-    <div class="etapes">
-      <div class="etape">
-        <span>📋</span>
-        <p>Choisis ton plat sur le menu</p>
-      </div>
-      <div class="etape">
-        <span>🛒</span>
-        <p>Remplis le formulaire de commande</p>
-      </div>
-      <div class="etape">
-        <span>💵</span>
-        <p>Paiement à la livraison ou par Tmoney au <strong>+228 70 02 04 70</strong></p>
-      </div>
-      <div class="etape">
-        <span>🛵</span>
-        <p>Livraison les mardis & vendredis à midi</p>
-      </div>
+    <form id="contactForm">
+      <label for="nom">Nom</label>
+      <input type="text" id="nom" name="nom" placeholder="Votre nom" required>
+
+      <label for="telephone">Téléphone</label>
+      <input type="tel" id="telephone" name="telephone" placeholder="+228 XX XX XX XX" required>
+
+      <label for="message">Message</label>
+      <textarea id="message" name="message" rows="5" placeholder="Votre message..." required></textarea>
+
+      <button type="submit" class="btn" id="btnEnvoyer">📩 Envoyer</button>
+    </form>
+
+    <p id="resultatContact"></p>
+
+    <div class="infos">
+      <p>📞 <strong>Téléphone / WhatsApp :</strong> <a href="https://wa.me/22870020470">+228 70 02 04 70</a></p>
+      <p>✉️ <strong>Email :</strong> <a href="mailto:etendajoseph2020@gmail.com">etendajoseph2020@gmail.com</a></p>
+      <p>📍 <strong>Adresse :</strong> Lomé, Togo</p>
     </div>
   </section>
 
@@ -62,16 +57,49 @@
     <p>&copy; 2025 Joe Délices — Lomé, Togo · Tous droits réservés</p>
   </footer>
 
+  <script>
+    document.getElementById("contactForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const btn     = document.getElementById("btnEnvoyer");
+      const resultat = document.getElementById("resultatContact");
+
+      btn.disabled = true;
+      btn.textContent = "⏳ Envoi en cours...";
+      resultat.innerHTML = "";
+
+      emailjs.send("service_starone", "template_vle5e2h", {
+        nom:       document.getElementById("nom").value.trim(),
+        telephone: document.getElementById("telephone").value.trim(),
+        message:   document.getElementById("message").value.trim()
+      })
+      .then(function() {
+        resultat.innerHTML = "✅ Message envoyé ! On vous répond très vite.";
+        resultat.style.color = "green";
+        document.getElementById("contactForm").reset();
+      })
+      .catch(function(err) {
+        console.error("Erreur :", err);
+        resultat.innerHTML = "❌ Erreur. Contactez-nous sur <a href='https://wa.me/22870020470' target='_blank'>WhatsApp</a>.";
+        resultat.style.color = "#c0392b";
+      })
+      .finally(function() {
+        btn.disabled = false;
+        btn.textContent = "📩 Envoyer";
+      });
+    });
+  </script>
+
   <!-- Overlay -->
   <div class="nav-overlay" id="navOverlay"></div>
 
   <!-- Drawer -->
   <div class="nav-drawer" id="navDrawer">
     <button class="drawer-close" id="drawerClose">&#x2715;</button>
-    <a href="index.html" class="active">Accueil</a>
+    <a href="index.html">Accueil</a>
     <a href="menu.html">Menu</a>
     <a href="commander.html">Commander</a>
-    <a href="contact.html">Contact</a>
+    <a href="contact.html" class="active">Contact</a>
   </div>
 
   <script>
