@@ -33,7 +33,7 @@
 
     <form id="commandeForm">
       <label for="nom">Nom ou pseudo</label>
-      <input type="text" id="nom" name="nom" placeholder="Ex: Joel" required>
+      <input type="text" id="nom" name="nom" placeholder="Ex: Koffi Agbessi" required>
 
       <label for="telephone">Téléphone</label>
       <input type="tel" id="telephone" name="telephone" placeholder="+228 XX XX XX XX" required>
@@ -48,7 +48,7 @@
       <input type="number" id="quantite" name="quantite" min="1" value="1" required>
 
       <label for="adresse">Adresse de livraison</label>
-      <textarea id="adresse" name="adresse" rows="3" placeholder="Quartier " required></textarea>
+      <textarea id="adresse" name="adresse" rows="3" placeholder="Quartier, rue, point de repère..." required></textarea>
 
       <label for="jour">Jour de livraison</label>
       <select id="jour" name="jour" required>
@@ -102,6 +102,35 @@
           btn.textContent = "🛒 Commander";
         });
     });
+  </script>
+
+  <!-- Hamburger -->
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- Overlay -->
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <!-- Drawer -->
+  <div class="nav-drawer" id="navDrawer">
+    <button class="drawer-close" id="drawerClose">&#x2715;</button>
+    <a href="index.html">Accueil</a>
+    <a href="menu.html">Menu</a>
+    <a href="commander.html" class="active">Commander</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <script>
+    const ham = document.getElementById('hamburger');
+    const drawer = document.getElementById('navDrawer');
+    const overlay = document.getElementById('navOverlay');
+    const closeBtn = document.getElementById('drawerClose');
+    function openMenu() { ham.classList.add('open'); drawer.classList.add('open'); overlay.classList.add('open'); }
+    function closeMenu() { ham.classList.remove('open'); drawer.classList.remove('open'); overlay.classList.remove('open'); }
+    ham.addEventListener('click', openMenu);
+    closeBtn.addEventListener('click', closeMenu);
+    overlay.addEventListener('click', closeMenu);
   </script>
 </body>
 </html>
