@@ -124,6 +124,90 @@ footer { text-align: center; padding: 28px 20px; background: var(--brown); color
   nav a { padding: 7px 12px; font-size: 0.85rem; }
 }
 
+/* ── HAMBURGER MENU ── */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 200;
+  flex-shrink: 0;
+}
+.hamburger span {
+  display: block;
+  width: 26px;
+  height: 3px;
+  background: var(--brown);
+  border-radius: 3px;
+  transition: transform 0.3s, opacity 0.3s;
+}
+.hamburger.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.hamburger.open span:nth-child(2) { opacity: 0; }
+.hamburger.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+/* Overlay sombre */
+.nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 150;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.nav-overlay.open { display: block; opacity: 1; }
+
+/* Panneau latéral droit */
+.nav-drawer {
+  position: fixed;
+  top: 0;
+  right: -280px;
+  width: 260px;
+  height: 100vh;
+  background: var(--white);
+  box-shadow: -4px 0 24px rgba(62,39,35,0.18);
+  z-index: 160;
+  transition: right 0.32s cubic-bezier(.4,0,.2,1);
+  display: flex;
+  flex-direction: column;
+  padding: 70px 24px 40px;
+  gap: 8px;
+}
+.nav-drawer.open { right: 0; }
+.nav-drawer a {
+  text-decoration: none;
+  color: var(--brown);
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 14px 18px;
+  border-radius: 12px;
+  transition: background 0.2s, color 0.2s;
+  border-left: 3px solid transparent;
+}
+.nav-drawer a:hover,
+.nav-drawer a.active {
+  background: var(--gold-light);
+  color: var(--brown);
+  border-left-color: var(--gold);
+}
+.nav-drawer .drawer-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: var(--brown);
+  line-height: 1;
+}
+
 /* ── MOBILE FIXES ── */
 @media (max-width: 600px) {
 
@@ -141,15 +225,9 @@ footer { text-align: center; padding: 28px 20px; background: var(--brown); color
     white-space: nowrap;
   }
 
-  nav {
-    gap: 2px;
-    flex-shrink: 0;
-  }
-
-  nav a {
-    font-size: 0.78rem;
-    padding: 6px 9px;
-  }
+  /* Cacher la nav desktop, montrer hamburger */
+  nav { display: none; }
+  .hamburger { display: flex; }
 
   /* Hero vertical, centré */
   .hero {
