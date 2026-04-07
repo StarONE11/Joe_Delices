@@ -86,5 +86,34 @@
       });
     });
   </script>
+
+  <!-- Hamburger -->
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <!-- Overlay -->
+  <div class="nav-overlay" id="navOverlay"></div>
+
+  <!-- Drawer -->
+  <div class="nav-drawer" id="navDrawer">
+    <button class="drawer-close" id="drawerClose">&#x2715;</button>
+    <a href="index.html">Accueil</a>
+    <a href="menu.html">Menu</a>
+    <a href="commander.html">Commander</a>
+    <a href="contact.html" class="active">Contact</a>
+  </div>
+
+  <script>
+    const ham = document.getElementById('hamburger');
+    const drawer = document.getElementById('navDrawer');
+    const overlay = document.getElementById('navOverlay');
+    const closeBtn = document.getElementById('drawerClose');
+    function openMenu() { ham.classList.add('open'); drawer.classList.add('open'); overlay.classList.add('open'); }
+    function closeMenu() { ham.classList.remove('open'); drawer.classList.remove('open'); overlay.classList.remove('open'); }
+    ham.addEventListener('click', openMenu);
+    closeBtn.addEventListener('click', closeMenu);
+    overlay.addEventListener('click', closeMenu);
+  </script>
 </body>
 </html>
