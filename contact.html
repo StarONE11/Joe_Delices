@@ -5,12 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Contact - Joe Délices</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script>
+    (function(){ emailjs.init("jdnNQ6cSdS1p72_Pe"); })();
+  </script>
 </head>
 <body>
   <header>
     <div class="logo">
-      <img src="images/joe-logo.png" alt="Logo Joe Délice">
-      <h1>Joe Délice</h1>
+      <img src="images/joe-logo.png" alt="Logo Joe Délices">
+      <h1>Joe Délices</h1>
     </div>
     <nav>
       <a href="index.html">Accueil</a>
@@ -22,30 +26,65 @@
 
   <section class="contact">
     <h2>Contactez-nous</h2>
-    <p>Une question ou une commande spéciale ? Écris-nous !</p>
+    <p>Une question ou une commande spéciale ? Écrivez-nous !</p>
 
-    <form action="#" method="post">
+    <form id="contactForm">
       <label for="nom">Nom</label>
-      <input type="text" id="nom" name="nom" required>
+      <input type="text" id="nom" name="nom" placeholder="Votre nom" required>
 
-      <label for="Telephone">Téléphone</label>
-      <input type="Telephone" id="Telephone" name="Telephone" required>
+      <label for="telephone">Téléphone</label>
+      <input type="tel" id="telephone" name="telephone" placeholder="+228 XX XX XX XX" required>
 
       <label for="message">Message</label>
-      <textarea id="message" name="message" rows="4" required></textarea>
+      <textarea id="message" name="message" rows="5" placeholder="Votre message..." required></textarea>
 
-      <button type="submit" style="margin-left: 15px;" class="btn">Envoyer</button>
+      <button type="submit" class="btn" id="btnEnvoyer">📩 Envoyer</button>
     </form>
 
+    <p id="resultatContact"></p>
+
     <div class="infos">
-      <p><strong>Téléphone :</strong> +228 70 02 04 70</p>
-      <p><strong>Email :</strong> etendajoseph2020@gmail.com</p>
-      <p><strong>Adresse :</strong> Lomé, Togo</p>
+      <p>📞 <strong>Téléphone / WhatsApp :</strong> <a href="https://wa.me/22870020470">+228 70 02 04 70</a></p>
+      <p>✉️ <strong>Email :</strong> <a href="mailto:etendajoseph2020@gmail.com">etendajoseph2020@gmail.com</a></p>
+      <p>📍 <strong>Adresse :</strong> Lomé, Togo</p>
     </div>
   </section>
 
   <footer>
-    <p>&copy; 2025 Joe Délices - Tous droits réservés</p>
+    <p>&copy; 2025 Joe Délices — Lomé, Togo · Tous droits réservés</p>
   </footer>
+
+  <script>
+    document.getElementById("contactForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const btn     = document.getElementById("btnEnvoyer");
+      const resultat = document.getElementById("resultatContact");
+
+      btn.disabled = true;
+      btn.textContent = "⏳ Envoi en cours...";
+      resultat.innerHTML = "";
+
+      emailjs.send("service_starone", "template_vle5e2h", {
+        nom:       document.getElementById("nom").value.trim(),
+        telephone: document.getElementById("telephone").value.trim(),
+        message:   document.getElementById("message").value.trim()
+      })
+      .then(function() {
+        resultat.innerHTML = "✅ Message envoyé ! On vous répond très vite.";
+        resultat.style.color = "green";
+        document.getElementById("contactForm").reset();
+      })
+      .catch(function(err) {
+        console.error("Erreur :", err);
+        resultat.innerHTML = "❌ Erreur. Contactez-nous sur <a href='https://wa.me/22870020470' target='_blank'>WhatsApp</a>.";
+        resultat.style.color = "#c0392b";
+      })
+      .finally(function() {
+        btn.disabled = false;
+        btn.textContent = "📩 Envoyer";
+      });
+    });
+  </script>
 </body>
 </html>
